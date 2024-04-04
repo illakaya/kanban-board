@@ -24,9 +24,37 @@
   </header>
   <div class="container">
     <div class="text-center mb-5">
-      <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#formModal">Add Task</button>
+      <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#formModal" id="opener">Add Task</button>
     </div>
     <!-- Todo: Create a modal with a form to add tasks -->
+    <div id="dialog-form" title="Add Task">
+      <!-- This is where users will be informed to fill in the form completely -->
+      <p class="validateTips"></p>
+      <form>
+        <fieldset>
+          <div>
+            <label for="task-title">
+              Task Title <br>
+              <input type="text" name="task-title" id="task-title" class="text ui-widget-content ui-corner-all">
+            </label>
+            <label for="task-date">
+              Task Due Date <br>
+              <input type="text" name="task-date" id="task-date" class="text ui-widget-content ui-corner-all">
+            </label>
+          </div>
+          <br>
+          <label for="task-desc">Task Description</label>
+          <textarea name="task-desc" id="task-desc" class="text ui-widget-content ui-corner-all" rows="3"></textarea>
+          <!-- Allow form submission with keyboard without duplicating the dialog button -->
+          <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+          <br>
+          <!-- added a button -->
+          <span class="text-center"><input type="submit" value="Add Task" class="btn btn-success"></span>
+        </fieldset>
+      </form>
+    </div>
+
+
 
     <!-- This is where the Task Table is -->
     <div class="row swim-lanes text-center justify-content-between">
