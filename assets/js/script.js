@@ -28,7 +28,54 @@ function generateTaskId() {
 
 // Todo: create a function to create a task card
 function createTaskCard(task) {
+    // Create a new div element for the card and add the classes 'card', 'task-card', 'draggable' and 'my-3'. Also add a `data-task-id` attribute and set it to the task id.
+    const taskCard = $('<div>');
+    taskCard.addClass(`card task-card draggable my-3`);
+    taskCard.attr(`data-task-id`, task.id);
+    // Create a new div element for the card header and add the classes `card-header` and `h4`. Also set the text of the card header to the task name.
+    const cardHeaderEl = $(`<div>`);
+    cardHeaderEl.addClass(`card-header h4`);
+    cardHeaderEl.text(task.name);
+    // Create a new div element for the card body and add the class `card-body`.
+    const cardBodyEl = $(`<div>`);
+    cardBodyEl.addClass(`card-body`);
+    // Create a new paragraph element and add the class `card-text`. Also set the text of the paragraph to the task type.
+    const cardTypeEl = $(`<p>`);
+    cardTypeEl.addClass(`card-text`);
+    cardTypeEl.text(task.type);
+    // Create a new paragraph element and add the class `card-text`. Also set the text of the paragraph to the task due date.
+    const cardDateEl = $(`<p>`);
+    cardDateEl.addClass(`card-text`);
+    cardDateEl.text(task.dueDate);
+    // Create a new button element and add the classes `btn`, `btn-danger`, and `delete`. Also set the text of the button to "Delete" and add a `data-task-id` attribute and set it to the task id.
+    const cardDeleteBtn = $(`<button>`);
+    cardDeleteBtn.addClass(`btn btn-danger delete`);
+    cardDeleteBtn.text(`Delete`);
+    cardDeleteBtn.attr(`data-task-id`, task.id);
+    
+    // Sets the card background color based on due date. Only apply the styles if the dueDate exists and the status is not done.
+    if (task.dueDate && task.status !== 'done') {
+        const now = dayjs();
+        const taskDueDate = dayjs(task.dueDate, 'DD/MM/YYYY');
 
+        // If the task is due today, make the card yellow. If it is overdue, make it red.
+        if (now.isSame(taskDueDate, 'day')) {
+        taskCard.addClass('bg-warning text-white');
+        } else if (now.isAfter(taskDueDate)) {
+        taskCard.addClass('bg-danger text-white');
+        cardDeleteBtn.addClass('border-light');
+        }
+    }
+
+    // Append the card description, card due date, and card delete button to the card body.
+    cardTypeEl.appendTo(cardBodyEl);
+    cardDateEl.appendTo(cardBodyEl);
+    cardDeleteBtn.appendTo(cardBodyEl);
+    // Append the card header and card body to the card.
+    cardHeaderEl.appendTo(taskCard);
+    cardBodyEl.appendTo(taskCard);
+    // Return the card so it can be appended to the correct lane.
+    return taskCard;
 }
 
 // Todo: create a function to render the task list and make cards draggable
