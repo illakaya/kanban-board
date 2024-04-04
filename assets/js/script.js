@@ -158,5 +158,35 @@ function handleDrop(event, ui) {
 
 // Todo: when the page loads, render the task list, add event listeners, make lanes droppable, and make the due date field a date picker
 $(document).ready(function () {
+    renderTaskList();
 
+    // add a dialog box that will not auto appear
+    $('#dialog-form').dialog({
+        autoOpen: false,
+        minWidth: 300,
+        width: 400,
+        // open: function() {
+        //     $(this).closest(".ui-dialog")
+        //     .find(".ui-dialog-titlebar-close")
+        //     .removeClass("ui-dialog-titlebar-close")
+        //     .html("<span class='ui-button-icon-primary ui-icon ui-icon-closethick'></span>");
+        // }
+    })
+    // dialog will open when the add task button is clicked on
+    $('#opener').on('click', function() {
+        $('#dialog-form').dialog('open');
+    })
+    $('button.ui-dialog-titlebar-close').addClass('btn ui-icon ui-icon-closethick');
+
+    // add date picker
+    $('#task-date').datepicker({
+        changeMonth: true,
+        changeYear: true,
+    });
+
+    // Make lanes droppable
+    $('.lane').droppable({
+        accept: '.draggable',
+        drop: handleDrop,
+    });
 });

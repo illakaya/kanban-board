@@ -14,3 +14,25 @@ body {
 .task-card:hover {
   cursor: grab;
 }
+
+/* styled the dialog */
+fieldset {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+fieldset div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+fieldset div label {
+  flex-grow: 1;
+  flex-basis: 110px;
+}
+
+fieldset div label input {
+  width: 100%;
+}
