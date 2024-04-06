@@ -27,14 +27,15 @@ No extra installations are required.
 ## Usage
 
 Link to website: https://illakaya.github.io/kanban-board/ <br>
-No special instructions are needed to use the application.
+No special instructions are needed to use the application. Note that tasks are colour coded as yellow when it is due on the day (nearing the deadline) and red when it is overdue.
 
 ## Credits
 
 Thank you to:
 
-- The Coding Bootcamp at the University of Sydney for providing a project for students to develop their understanding of Third-Party APIs where I made massive references to Week 5 Lesson 28 Student mini project
+- The Coding Bootcamp at the University of Sydney for providing a project for students to develop their understanding of Third-Party APIs where I made massive references to Week 5 Lesson 28 Student mini project for majority of the project
 - Instructor Frank Fu and teacher assistant Sean Butcher for providing the foundational knowledge required to attempt the project
+- Initially used code suggested by Fabio Montefuscolo on [Stack Overflow](https://stackoverflow.com/questions/3231459/how-can-i-create-unique-ids-with-javascript) on line 22 of script.js but ultimately it was removed
 
 ## License
 
