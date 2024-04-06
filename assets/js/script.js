@@ -38,10 +38,10 @@ function generateTaskId() {
 
 // Todo: create a function to create a task card.
 function createTaskCard(task) {
-    // Create a new div element for the card and add the classes 'card', 'task-card', 'draggable' and 'my-3'. Also add a 'task-id' attribute and set it to the task id.
+    // Create a new div element for the card and add the classes 'card', 'task-card', 'draggable' and 'my-3'. Also add a 'data-task-id' attribute and set it to the task id.
     const taskCard = $('<div>');
     taskCard.addClass('card task-card draggable my-3');
-    taskCard.attr('task-id', task.id);
+    taskCard.attr('data-task-id', task.id);
     // Create a new div element for the card header and add the classes 'card-header' and 'h4'. Also set the text of the card header to the task name.
     const cardHeaderEl = $('<div>');
     cardHeaderEl.addClass('card-header h4');
@@ -57,11 +57,11 @@ function createTaskCard(task) {
     const cardDateEl = $('<p>');
     cardDateEl.addClass('card-text');
     cardDateEl.text(task.dueDate);
-    // Create a new button element and add the classes 'btn', 'btn-danger', and 'delete'. Also set the text of the button to 'Delete' and add a 'task-id' attribute and set it to the task id.
+    // Create a new button element and add the classes 'btn', 'btn-danger', and 'delete'. Also set the text of the button to 'Delete' and add a 'data-task-id' attribute and set it to the task id.
     const cardDeleteBtn = $('<button>');
     cardDeleteBtn.addClass('btn btn-danger delete');
     cardDeleteBtn.text('Delete');
-    cardDeleteBtn.attr('task-id', task.id);
+    cardDeleteBtn.attr('data-task-id', task.id);
     
     // Sets the card background color based on due date. Only apply the styles if the dueDate exists and the status is not done.
     if (task.dueDate && task.status !== 'done') {
@@ -198,30 +198,46 @@ function handleAddTask(event) {
 function handleDeleteTask(event){
     // Not actually sure why we are passing an event through...
     // As the button is not in a form, regardless, prevent default behaviour of refreshing.
-    event.preventDefault();
+    // event.preventDefault();
 
     // For the delete button clicked, identify the attribute of task id that was attached.
-    let taskId = $(this).attr('task-id');
+    const taskId = $(this).attr('data-task-id');
 
     // Loop through the tasks array and remove the task with the matching id.
-    // As the task and id are generated at the same time and should be in the same position, only one for loop is necessary to remove from BOTH arrays
-    for (let i=0; i < taskList.length; i++) {
+    // As the task and id are generated at the same time and should be in the same position, only one for loop is necessary to remove from BOTH arrays.
+    for (let i = 0; i < taskList.length; i++) {
         if (taskList[i].id === taskId) {
             taskList.splice(i, 1);
             nextId.splice(i, 1);
         }
     }
-    // Save the new tasks and id array to localStorage
+    // Save the new tasks and id array to localStorage.
     localStorage.setItem('tasks', JSON.stringify(taskList));
     localStorage.setItem('id', JSON.stringify(nextId));
 
-    // Render the tasks back to the screen
+    // Render the tasks back to the screen.
     renderTaskList();
 }
 
 // Todo: create a function to handle dropping a task into a new status lane.
 function handleDrop(event, ui) {
+    // Get the task id from the event.
+    // For the object with the class draggable, extract the data 'task-id'.
+    // Note: you need the attribute to have data-name for dataset to be able to read that attribute
+    const taskId = ui.draggable[0].dataset.taskId;
+    // Get the id of the lane that the card was dropped into.
+    let newStatus = event.target.id;
 
+    for (let task of taskList) {
+        // Find the task card by the 'id' and update the task status.
+        if (task.id === taskId) {
+            task.status = newStatus;
+        }
+    }
+
+    // Save the updated projects array to localStorage (overwritting the previous one) and render the new project data to the screen.
+    localStorage.setItem('tasks', JSON.stringify(taskList));
+    renderTaskList();
 }
 
 // Look for the event where the task form is submitted and call the handleAddTask function.
